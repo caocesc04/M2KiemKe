@@ -18,29 +18,32 @@ Route::get('/', function () {
 Route::get('/dangky', function () {
     return view('dangky');
 });
-Route::get('/adduser', 'LoginsController@index');
 Route::match(['get', 'post'],'home','LoginsController@login');
-Route::get('/phancongkiemke', 'PhanCongKiemKeController@index');
-Route::get('/kiemketonghop', 'KiemKeController@index');
-Route::get('/kiemkecuahang', 'KiemKeController@indexcuahang');
-Route::get('/kiemkenhanvien', 'KiemKeController@indexnhanvien');
-Route::get('/chitietmhkh', 'KiemKeController@indexchitietmhkh');
 
-Route::post('editphancong', 'PhanCongKiemKeController@editpckk');
-Route::post('deletephancong', 'PhanCongKiemKeController@deletepckk');
-Route::post('editnhanvien', 'UsersController@editnv');
-Route::post('deletenhanvien', 'UsersController@deletenv');
-Route::post('changestatus', 'UsersController@changestatus');
-Route::post('kiemkehethong', 'KiemKeController@kiemkehethong');
-Route::post('kiemkecuahang', 'KiemKeController@kiemkecuahang');
-Route::post('kiemkenhanvien', 'KiemKeController@kiemkenhanvien');
-Route::post('kiemkemhkh', 'KiemKeController@kiemkechitietmhkh');
+Route::group(['middleware' => ['checklogin']],function(){
+
+	Route::get('/adduser', 'LoginsController@index');
+	Route::get('/phancongkiemke', 'PhanCongKiemKeController@index');
+	Route::get('/kiemketonghop', 'KiemKeController@index');
+	Route::get('/kiemkecuahang', 'KiemKeController@indexcuahang');
+	Route::get('/kiemkenhanvien', 'KiemKeController@indexnhanvien');
+	Route::get('/chitietmhkh', 'KiemKeController@indexchitietmhkh');
+
+	Route::post('editphancong', 'PhanCongKiemKeController@editpckk');
+	Route::post('deletephancong', 'PhanCongKiemKeController@deletepckk');
+	Route::post('editnhanvien', 'UsersController@editnv');
+	Route::post('deletenhanvien', 'UsersController@deletenv');
+	Route::post('changestatus', 'UsersController@changestatus');
+	Route::post('kiemkehethong', 'KiemKeController@kiemkehethong');
+	Route::post('kiemkecuahang', 'KiemKeController@kiemkecuahang');
+	Route::post('kiemkenhanvien', 'KiemKeController@kiemkenhanvien');
+	Route::post('kiemkemhkh', 'KiemKeController@kiemkechitietmhkh');
 
 
-//resource
-Route::resource('loginss','LoginsController');
-Route::resource('registers','RegistersController');
-Route::resource('phancongkiemke','PhanCongKiemKeController');
-
+	//resource
+	Route::resource('loginss','LoginsController');
+	Route::resource('registers','RegistersController');
+	Route::resource('phancongkiemke','PhanCongKiemKeController');
+});
 
 Auth::routes();

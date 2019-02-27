@@ -6,6 +6,7 @@ use App\User;
 use App\KiemKe;
 use Illuminate\Http\Request;
 use Redirect;
+use Session;
 
 
 class LoginsController extends Controller
@@ -20,6 +21,7 @@ class LoginsController extends Controller
         $user = User::where('Username', $req->Username)->where('Password', $req->Password)->where('Permission', '!=', 2)->pluck('Ten')->first();
         $nhanvien  = User::where('Permission','2')->where('Status','1')->get();
         if($user != null){
+            Session::put('adminSession',$users);
             return redirect()->away('/adduser');
         }else{
             return Redirect::back()->with('successMsg','Mời bạn đăng nhập lại!');
